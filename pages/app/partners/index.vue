@@ -148,7 +148,7 @@
             });
             setTimeout(() => {
               this.modifyPartner()
-            }, 2000);
+            }, 1000);
           })
           .catch((err) => {
             console.log(err.response)

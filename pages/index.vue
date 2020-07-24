@@ -34,7 +34,7 @@
                   <input class="custom-control-input" id="same-address" type="checkbox" checked>
                   <label class="custom-control-label font-14" for="same-address">Keep me logged in</label>
                 </div>
-                <button class="btn btn-primary btn-block" type="submit">Login</button>
+                <nuxt-link class="btn btn-primary btn-block" to="/app">Login</nuxt-link>
                 <p class="font-14 text-center mt-15">Having trouble logging in?</p>
                 <div class="option-sep">-</div>
                 <p class="text-center">Contact the admin</p>

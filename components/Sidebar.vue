@@ -55,6 +55,14 @@
             <span>User Interface</span>
             <span>UI</span>
           </div>
+           <ul class="navbar-nav flex-column">
+             <li class="nav-item ">
+              <nuxt-link class="nav-link" to="/">
+                <i class="fa fa-power-off"></i>
+                <span class="nav-link-text">Logout</span>
+              </nuxt-link>
+            </li>
+           </ul>
           <ul class="navbar-nav flex-column d-none">
             <li class="nav-item">
               <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#content_drp">
@@ -149,6 +157,7 @@
                 </li>
               </ul>
             </li>
+            
           </ul>
         </div>
       </div>

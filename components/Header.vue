@@ -27,7 +27,7 @@
             <a class="dropdown-item" href="#"><i
                 class="dropdown-icon zmdi zmdi-account"></i><span>Profile</span></a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-power"></i><span>Log out</span></a>
+            <nuxt-link class="dropdown-item" to="/"><i class="dropdown-icon zmdi zmdi-power"></i><span>Log out</span></nuxt-link>
           </div>
         </li>
       </ul>

@@ -20,18 +20,22 @@
                 <div class="hk-row">
                   <div class="col-sm-6">
                     <div class="card card-sm">
-                      <div class="card-body">
+                      <div class="card-body" style="background: #233c46;">
                         <div class="d-flex justify-content-between mb-5">
                           <div>
-                            <span class="d-block font-15 text-dark font-weight-500">Visits</span>
+                            <span class="d-block font-15 text-white font-weight-500">Total Companies</span>
                           </div>
                           <div>
-                            <span class="badge badge-primary  badge-sm">+10%</span>
+                            <span class="badge badge-primary  badge-sm"></span>
                           </div>
                         </div>
                         <div>
-                          <span class="d-block display-5 text-dark mb-5">76.5K</span>
-                          <small class="d-block">172,458 Target Users</small>
+                          <span class="d-block display-5 text-dark mb-5">
+                            <div class="d-flex justify-content-between">
+                              <p class="text-white"><i class="fa fa-bank"></i></p>
+                              <p class="text-white">{{ companies }}</p>
+                            </div>
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -41,51 +45,49 @@
                       <div class="card-body">
                         <div class="d-flex justify-content-between mb-5">
                           <div>
-                            <span class="d-block font-15 text-dark font-weight-500">Users</span>
+                            <span class="d-block font-15 text-dark font-weight-500">Total Patners</span>
                           </div>
                           <div>
-                            <span class="badge badge-danger   badge-sm">+10%</span>
+                            <span class="badge badge-danger badge-sm"></span>
                           </div>
                         </div>
                         <div>
-                          <span class="d-block display-5 text-dark mb-5">68M</span>
-                          <small class="d-block">90M Targeted</small>
+                          <span class="d-block display-5 text-dark mb-5">
+                            <div class="d-flex justify-content-between">
+                              <p><i class="fa fa-group"></i></p>
+                              <p>{{ partners.total }}</p>
+                            </div>
+                          </span>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-3">
                     <div class="card card-sm">
                       <div class="card-body">
                         <div class="d-flex justify-content-between mb-5">
                           <div>
-                            <span class="d-block font-15 text-dark font-weight-500">Tickets</span>
-                          </div>
-                          <div>
-                            <span class="badge badge-primary  badge-sm">-1.5%</span>
+                            <span class="d-block font-13 text-dark font-weight-500">Active Partners</span>
                           </div>
                         </div>
                         <div>
-                          <span class="d-block display-5 text-dark mb-5">73</span>
-                          <small class="d-block">100 Regular</small>
+                          <span class="d-block display-5 text-dark mb-5">{{partners.active }}</span>
+                          <small class="d-block"></small>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-3">
                     <div class="card card-sm">
-                      <div class="card-body">
+                      <div class="card-body" style="background: #ca342d;">
                         <div class="d-flex justify-content-between mb-5">
                           <div>
-                            <span class="d-block font-15 text-dark font-weight-500">Earnings</span>
-                          </div>
-                          <div>
-                            <span class="badge badge-warning  badge-sm">+60%</span>
+                            <span class="d-block font-13 text-white font-weight-500">Inactive Partners</span>
                           </div>
                         </div>
                         <div>
-                          <span class="d-block display-5 text-dark mb-5">$89M</span>
-                          <small class="d-block">$100M Targeted</small>
+                          <span class="d-block display-5 text-white mb-5">{{ partners.inactive }}</span>
+                          <small class="d-block"></small>
                         </div>
                       </div>
                     </div>
@@ -96,7 +98,7 @@
               <div class="col-lg-5">
                 <div class="card">
                   <div class="card-header card-header-action">
-                    <h6>Visit by Traffic Types</h6>
+                    <h6>API TRAFFIC CALLS</h6>
                     <div class="d-flex align-items-center card-action-wrap">
                       <div class="inline-block dropdown">
                         <a class="dropdown-toggle no-caret" data-toggle="dropdown" href="#" aria-expanded="false"
@@ -111,7 +113,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card-body">
+                  <div class="card-body d-none">
                     <div id="e_chart_3" style="height:250px;"></div>
                     <div class="hk-legend-wrap mt-20">
                       <div class="hk-legend">
@@ -139,4 +141,45 @@
     <!-- /Main Content -->
 </template>
 
+<script>
+  import {
+    FETCH_ALL_COMPANIES,
+    FETCH_ALL_PARTNERS
+  } from "@/utils/routes";
+export default {
+  data() {
+    return {
+      companies: 0,
+      partners: {
+        total: 0,
+        active: 0,
+        inactive: 0
+      }
+    }
+  },
+  methods: {
+    async getDashboardData() {
+      Promise.all([
+        await this.$axios.get(FETCH_ALL_COMPANIES),
+        await this.$axios.get(FETCH_ALL_PARTNERS)
+      ])
+      .then((response) => {
+          this.companies = response[0].data.dataInfo.length
+          const partners = response[1].data.dataInfo
+          this.partners = {
+            total: partners.length,
+            active: partners.filter(el => el.isValid == true).length,
+            inactive: partners.filter(el => el.isValid == false).length
+          }
+      })
+      .catch(err => {
+        console.log(err)
+      }) 
+    }
+  },
+  mounted() {
+    this.getDashboardData()
+  }
+}
+</script>
 

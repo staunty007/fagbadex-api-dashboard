@@ -1,0 +1,22 @@
+{
+  "name": "fagbadex",
+  "version": "1.0.0",
+  "description": "My badass Nuxt.js project",
+  "author": "Stanley",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/dotenv": "^1.4.0",
+    "dateformat": "^3.0.3",
+    "feather-icons": "^4.28.0",
+    "nuxt": "^2.0.0",
+    "vue-good-table": "^2.20.0"
+  },
+  "devDependencies": {}
+}

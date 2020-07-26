@@ -2,8 +2,11 @@
   <div>
     <!-- Vertical Nav -->
     <nav class="hk-nav hk-nav-dark">
-      <a href="javascript:void(0);" id="hk_nav_close" class="hk-nav-close"><span class="feather-icon"><i
-            data-feather="x"></i></span></a>
+      <a href="javascript:void(0);" id="hk_nav_close" class="hk-nav-close">
+        <span class="feather-icon">
+          <i data-feather="x"></i>
+        </span>
+      </a>
       <div class="nicescroll-bar">
         <div class="navbar-nav-wrap">
           <ul class="navbar-nav flex-column">
@@ -14,7 +17,12 @@
               </nuxt-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#companies_drp">
+              <a
+                class="nav-link"
+                href="javascript:void(0);"
+                data-toggle="collapse"
+                data-target="#companies_drp"
+              >
                 <i class="fa fa-ils"></i>
                 <span class="nav-link-text">Companies</span>
               </a>
@@ -32,7 +40,12 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#partners_drp">
+              <a
+                class="nav-link"
+                href="javascript:void(0);"
+                data-toggle="collapse"
+                data-target="#partners_drp"
+              >
                 <i class="fa fa-users"></i>
                 <span class="nav-link-text">Patners</span>
               </a>
@@ -50,23 +63,30 @@
               </ul>
             </li>
           </ul>
-          <hr class="nav-separator">
+          <hr class="nav-separator" />
           <div class="nav-header">
             <span>User Interface</span>
             <span>UI</span>
           </div>
-           <ul class="navbar-nav flex-column">
-             <li class="nav-item ">
-              <nuxt-link class="nav-link" to="/">
+          <ul class="navbar-nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" @click.prevent="logout">
                 <i class="fa fa-power-off"></i>
                 <span class="nav-link-text">Logout</span>
-              </nuxt-link>
+              </a>
             </li>
-           </ul>
+          </ul>
           <ul class="navbar-nav flex-column d-none">
             <li class="nav-item">
-              <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#content_drp">
-                <span class="feather-icon"><i data-feather="type"></i></span>
+              <a
+                class="nav-link"
+                href="javascript:void(0);"
+                data-toggle="collapse"
+                data-target="#content_drp"
+              >
+                <span class="feather-icon">
+                  <i data-feather="type"></i>
+                </span>
                 <span class="nav-link-text">Content</span>
               </a>
               <ul id="content_drp" class="nav flex-column collapse collapse-level-1">
@@ -86,8 +106,15 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#utilities_drp">
-                <span class="feather-icon"><i data-feather="anchor"></i></span>
+              <a
+                class="nav-link"
+                href="javascript:void(0);"
+                data-toggle="collapse"
+                data-target="#utilities_drp"
+              >
+                <span class="feather-icon">
+                  <i data-feather="anchor"></i>
+                </span>
                 <span class="nav-link-text">Utilities</span>
               </a>
               <ul id="utilities_drp" class="nav flex-column collapse collapse-level-1">
@@ -122,8 +149,15 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#forms_drp">
-                <span class="feather-icon"><i data-feather="server"></i></span>
+              <a
+                class="nav-link"
+                href="javascript:void(0);"
+                data-toggle="collapse"
+                data-target="#forms_drp"
+              >
+                <span class="feather-icon">
+                  <i data-feather="server"></i>
+                </span>
                 <span class="nav-link-text">Forms</span>
               </a>
               <ul id="forms_drp" class="nav flex-column collapse collapse-level-1">
@@ -157,7 +191,6 @@
                 </li>
               </ul>
             </li>
-            
           </ul>
         </div>
       </div>
@@ -168,13 +201,18 @@
 </template>
 
 <script>
-  export default {
-  }
-
+export default {
+  methods: {
+    async logout() {
+      await this.$store.dispatch("logout");
+      this.$router.push("/");
+    },
+  },
+};
 </script>
 
 <style scoped>
-  .hk-nav {
-    position: fixed;
-  }
+.hk-nav {
+  position: fixed;
+}
 </style>

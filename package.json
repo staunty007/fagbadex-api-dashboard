@@ -16,7 +16,8 @@
     "dateformat": "^3.0.3",
     "feather-icons": "^4.28.0",
     "nuxt": "^2.0.0",
-    "vue-good-table": "^2.20.0"
+    "vue-good-table": "^2.20.0",
+    "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {}
 }

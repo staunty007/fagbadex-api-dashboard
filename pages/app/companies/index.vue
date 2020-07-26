@@ -91,6 +91,7 @@
           rows: [],
           detailedCompanies: []
         },
+        error: {}
       }
     },
     methods: {
@@ -113,7 +114,7 @@
             }, 1000);
           })
           .catch((err) => {
-            console.log(err.response)
+            this.error = err.response
           })
       },
       selectCompany() {

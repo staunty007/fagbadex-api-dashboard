@@ -75,6 +75,61 @@
       </div>
     </div>
 
+    <div class="modal fade" id="displayFullView" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge01"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content rounded-0">
+          <div class="modal-header">
+            <h5 class="modal-title font-weight-bold">{{ selectedPartner.partnerName }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body bg-light">
+            <div class="row">
+              <div class="col-md-9 col-sm-12">
+                <div class="card rounded-0">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <h6 class="card-title text-uppercase">Auth Credentials</h6>
+                    </div>
+                    <p class="card-text">
+                      <span class="font-weight-bold">user : </span>
+                      <span>{{ selectedPartner.authUser}}</span>
+                    </p>
+                    <p class="card-text">
+                      <span class="font-weight-bold">password : </span>
+                      <span>{{ selectedPartner.authPassword}}</span>
+                    </p>
+                    <p class="card-text">
+                      <span class="font-weight-bold">secret : </span>
+                      <small>{{ selectedPartner.authSecret}}</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-12">
+                <div class="card rounded-0">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <h6 class="card-title font-weight-bold text-uppercase">API Calls</h6>
+                    </div>
+                    <p class="card-text">
+                      <span class="font-weight-bold">total</span>: <span>{{ selectedPartnerCalls.total }}</span>
+                    </p>
+                    <p class="card-text">
+                      <span class="font-weight-bold">monthly</span>: <span> {{ selectedPartnerCalls.monthly }}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+
   </div>
   <!-- /Main Content -->
 </template>
@@ -86,6 +141,7 @@
     BLOCK_PARTNER,
     UNBLOCK_PARTNER,
     DELETE_PARTNER,
+    PARTNER_API_CALLS
   } from "@/utils/routes";
   export default {
     data() {
@@ -114,8 +170,8 @@
               html: true,
             },
             {
-              label: 'Delete',
-              field: 'delete',
+              label: 'Actions',
+              field: 'actions',
               html: true,
             }
           ],
@@ -123,6 +179,12 @@
           detailedPartners: [],
           partnerId: ''
         },
+        selectedPartner: {},
+        selectedPartnerCalls: {
+          monthly: 0,
+          total: 0
+        },
+        error: {}
       }
     },
     methods: {
@@ -130,7 +192,7 @@
         await this.$axios.get(FETCH_ALL_PARTNERS)
           .then((res) => {
             const partners = res.data.dataInfo
-            this.detailedCompanies = partners
+            this.detailedPartners = partners
             this.partners.rows = partners.map((e) => {
               return {
                 partnerName: e.partnerName,
@@ -143,7 +205,12 @@
                 :
                 `<button type='button' class='btn btn-info btn-sm action-partner' data-id='${e._id}' data-type='unblock'>Unblock <i class='fa fa-unlock'></i></button>` 
                 }`,
-                delete: `<button type='button' class='btn btn-danger  btn-sm action-partner' data-id='${e._id}' data-type='delete'>Delete <i class='fa fa-trash'></i></button>`
+                actions: `
+                <div class='btn-group'>
+                  <button type='button' class='btn btn-info  btn-sm action-partner' data-id='${e._id}' data-type='view'>View <i class='fa fa-eye'></i></button>
+                  <button type='button' class='btn btn-danger  btn-sm action-partner' data-id='${e._id}' data-type='delete'>Delete <i class='fa fa-trash'></i></button>
+                </div>
+                `
               }
             });
             setTimeout(() => {
@@ -151,7 +218,7 @@
             }, 1000);
           })
           .catch((err) => {
-            console.log(err.response)
+            this.error = err.response
           })
       },
       modifyPartner() {
@@ -165,6 +232,8 @@
             self.unblockPartner(actionId)
           if (actionType == 'delete')
             self.showModalPopup(actionId)
+          if (actionType == 'view')
+            self.displayFullInfo(actionId)
         });
       },
       async blockPartner(id) {
@@ -174,7 +243,7 @@
             this.fetchAllPatners()
           })
           .catch((err) => {
-            console.log(err.response)
+            this.error = err.response
           })
       },
       async unblockPartner(id) {
@@ -184,7 +253,7 @@
             this.fetchAllPatners()
           })
           .catch((err) => {
-            console.log(err.response)
+            this.error = err.response
           })
       },
       async deletePartner() {
@@ -195,13 +264,32 @@
             this.fetchAllPatners()
           })
           .catch((err) => {
+            this.error = err.response
+          })
+        $('#deleteModal').modal('hide')
+      },
+      async getPartnerCalls(id) {
+        this.selectedPartnerCalls = {}
+        await this.$axios.get(PARTNER_API_CALLS(id))
+          .then((res) => {
+            const response = res.data.dataInfo
+            this.selectedPartnerCalls = {
+              monthly: response.monthly.length,
+              total: response.total.length
+            }
+          })
+          .catch(err => {
             console.log(err.response)
           })
-          $('#deleteModal').modal('hide')
       },
       showModalPopup(id) {
         this.partners.partnerId = id
         $('#deleteModal').modal('show')
+      },
+      displayFullInfo(id) {
+        this.getPartnerCalls(id)
+        this.selectedPartner = this.detailedPartners.filter(e => e._id == id)[0];
+        $('#displayFullView').modal('show');
       },
       successToast(message) {
         $.toast().reset('all');

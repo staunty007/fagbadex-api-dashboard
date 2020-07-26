@@ -74,7 +74,8 @@
         form: {
           partnerName: '',
           partnerEmail: ''
-        }
+        },
+        error: {}
       }
     },
     methods: {
@@ -95,7 +96,7 @@
           })
           .catch(error => {
             if (error.response == undefined) {
-              console.log(error.response)
+              this.error = error.response
               return
             }
 

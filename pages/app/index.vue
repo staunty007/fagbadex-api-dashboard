@@ -1,6 +1,6 @@
 <template>
     <!-- Main Content -->
-    <div class="hk-pg-wrapper">
+    <div class="hk-pg-wrapper vh-100">
       <!-- Container -->
       <div class="container mt-xl-50 mt-sm-30 mt-15">
         <!-- Title -->
@@ -98,35 +98,33 @@
               <div class="col-lg-5">
                 <div class="card">
                   <div class="card-header card-header-action">
-                    <h6>API TRAFFIC CALLS</h6>
-                    <div class="d-flex align-items-center card-action-wrap">
-                      <div class="inline-block dropdown">
-                        <a class="dropdown-toggle no-caret" data-toggle="dropdown" href="#" aria-expanded="false"
-                          role="button"><i class="ion ion-ios-more"></i></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="#">Separated link</a>
+                    <h6>NEWEST COMPANIES</h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="table-wrap">
+                        <div class="table-responsive">
+                          <table class="table table-sm table-striped table-hover mb-0">
+                            <thead>
+                              <tr>
+                                <th class="font-weight-bold">Company Name</th>
+                                <th class="font-weight-bold">Company Code</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(company, index) in companyLists" :key="index">
+                                <td>{{ company.companyName }}</td>
+                                <td>{{ company.companyCode }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="card-body d-none">
-                    <div id="e_chart_3" style="height:250px;"></div>
-                    <div class="hk-legend-wrap mt-20">
-                      <div class="hk-legend">
-                        <span class="d-10 bg-purple rounded-circle d-inline-block"></span><span>18-24</span>
-                      </div>
-                      <div class="hk-legend">
-                        <span class="d-10 bg-grey-light-1 rounded-circle d-inline-block"></span><span>25-34</span>
-                      </div>
-                      <div class="hk-legend">
-                        <span class="d-10 bg-grey-light-2  rounded-circle d-inline-block"></span><span>35-44</span>
                       </div>
                     </div>
                   </div>
+                  
                 </div>
               </div>
             </div>
@@ -154,7 +152,9 @@ export default {
         total: 0,
         active: 0,
         inactive: 0
-      }
+      },
+      companyLists: [],
+      error: {}
     }
   },
   methods: {
@@ -164,6 +164,7 @@ export default {
         await this.$axios.get(FETCH_ALL_PARTNERS)
       ])
       .then((response) => {
+          this.companyLists = response[0].data.dataInfo.slice(0, 2)
           this.companies = response[0].data.dataInfo.length
           const partners = response[1].data.dataInfo
           this.partners = {
@@ -173,7 +174,7 @@ export default {
           }
       })
       .catch(err => {
-        console.log(err)
+       this.error = err.response
       }) 
     }
   },

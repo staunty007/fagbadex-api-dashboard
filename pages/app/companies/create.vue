@@ -230,7 +230,8 @@
           regionCode: '',
           registrationAddress: '',
           registrationNumber: ''
-        }
+        },
+        error: {}
       }
     },
     methods: {
@@ -251,7 +252,7 @@
           })
           .catch(error => {
             if(error.response == undefined) {
-              console.log(error.response)
+              this.error = err.response
               return
             }
 

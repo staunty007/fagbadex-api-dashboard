@@ -31,13 +31,9 @@
               <div class="col-sm">
                 <div class="table-wrap">
 
-                  <vue-good-table 
-                  :columns="companies.columns"
-                  :rows="companies.rows"
-                  :search-options="{
+                  <vue-good-table :columns="companies.columns" :rows="companies.rows" :search-options="{
                     enabled: true
-                  }"
-                  :pagination-options="{
+                  }" :pagination-options="{
                     enabled: true,
                     mode: 'records'
                   }" />
@@ -53,20 +49,46 @@
     </div>
     <!-- /Container -->
 
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <p class="modal-title text-uppercase font-weight-bold text-dark">Delete Company</p>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="text-uppercase">Are you Sure ?</p>
+            <div class="mt-5">
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn btn-danger btn-sm btn-block" @click="deleteCompany">Yes</button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn btn-secondary btn-sm btn-block" data-dismiss="modal">No</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
   <!-- /Main Content -->
 </template>
 
 <script>
   import {
-    FETCH_ALL_COMPANIES
+    FETCH_ALL_COMPANIES,
+    MODIFY_COMPANY
   } from "@/utils/routes";
   export default {
     data() {
       return {
         companies: {
-          columns: [
-            {
+          columns: [{
               label: 'Company Name',
               field: 'companyName',
             },
@@ -89,8 +111,9 @@
             },
           ],
           rows: [],
-          detailedCompanies: []
+          detailedCompanies: [],
         },
+        selectedCompanyId: "",
         error: {}
       }
     },
@@ -106,7 +129,13 @@
                 countryCode: e.countryCode,
                 regionCode: e.regionCode,
                 supplierId: e.supplierId,
-                more: `<button type='button' class='btn btn-info  btn-sm more-data' data-company='${e.companyName}'>More <i class='fa fa-eye'></i></button>`
+                more: `
+                <div class='btn-group'>
+                  <button type='button' class='btn btn-info  btn-sm more-data' data-id='${e._id}'  data-company='${e.companyName}' data-type='view'><i class='fa fa-eye'></i></button>
+                  <button type='button' class='btn btn-warning  btn-sm more-data' data-id='${e._id}'  data-company='${e.companyName}' data-type='edit'><i class='fa fa-pencil'></i></button>
+                  <button type='button' class='btn btn-danger  btn-sm more-data' data-id='${e._id}' data-company='${e.companyName}' data-type='delete'> <i class='fa fa-trash'></i></button>
+                </div>
+                `
               }
             });
             setTimeout(() => {
@@ -119,15 +148,58 @@
       },
       selectCompany() {
         var self = this
+        //console.log("Helo")
         $('.more-data').on('click', function () {
           const companyName = $(this).data('company');
+          const companyId = $(this).data('id');
+          const btnType = $(this).data('type');
           const filteredCompany = self.detailedCompanies.filter(el => el.companyName == companyName)[0]
-          self.$router.push({
-            name: 'app-companies-search',
-            params: { company : filteredCompany }
-          })
+          if (btnType == 'view') {
+            self.$router.push({
+              name: 'app-companies-search',
+              params: {
+                company: filteredCompany
+              }
+            })
+          }
+          if (btnType == 'edit') {
+            const companyId = filteredCompany._id
+            self.$router.push('/app/companies/edit/' + companyId);
+          }
+          if (btnType == 'delete') {
+            self.showModalPopup(companyId);
+          }
         });
 
+      },
+      async deleteCompany() {
+        const id = this.selectedCompanyId
+        await this.$axios.delete(MODIFY_COMPANY(id))
+          .then((res) => {
+            this.successToast('Company Deleted Successfully..')
+            this.fetchAllCompanies()
+          })
+          .catch((err) => {
+            this.error = err.response
+          })
+        $('#deleteModal').modal('hide')
+      },
+      showModalPopup(id) {
+        console.log(id);
+        this.selectedCompanyId = id
+        $('#deleteModal').modal('show')
+      },
+      successToast(message) {
+        $.toast().reset('all');
+        $.toast({
+          text: `<p>${message}.</p>`,
+          position: 'top-right',
+          loaderBg: '#ab26aa',
+          class: 'jq-toast-success',
+          hideAfter: 3500,
+          stack: 6,
+          showHideTransition: 'fade'
+        });
       }
     },
     mounted() {

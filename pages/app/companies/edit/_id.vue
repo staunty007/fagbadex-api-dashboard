@@ -8,7 +8,8 @@
         <li class="breadcrumb-item"><a href="#">Companies</a></li>
         <li class="breadcrumb-item active" aria-current="page">Add New Company</li>
         <li class="ml-auto">
-          <nuxt-link class="btn btn-primary btn-block btn-sm" to="/app/companies"><small>Show All</small> <i class="fa fa-list-ul"></i>
+          <nuxt-link class="btn btn-primary btn-block btn-sm" to="/app/companies"><small>Show All</small> <i
+              class="fa fa-list-ul"></i>
           </nuxt-link>
         </li>
       </ol>
@@ -28,10 +29,12 @@
                 <div class="row">
                   <div class="col-md-3">
                     <ul class="list-group mb-15">
-                      <button type="button" class="list-group-item list-group-item-action rounded-0 btn-sm" @click="section.name='first'" :class="{ active: section.first }">
+                      <button type="button" class="list-group-item list-group-item-action rounded-0 btn-sm"
+                        @click="section.name='first'" :class="{ active: section.first }">
                         First
                       </button>
-                      <button type="button" class="list-group-item list-group-item-action rounded-0 btn-sm" @click="section.name='second'" :class="{ active: section.second }">
+                      <button type="button" class="list-group-item list-group-item-action rounded-0 btn-sm"
+                        @click="section.name='second'" :class="{ active: section.second }">
                         Second
                       </button>
                     </ul>
@@ -176,7 +179,7 @@
                         </div>
                       </div>
                       <div class="col-md-5 mt-3">
-                        <button class="btn btn-primary btn-block btn-sm" @click.prevent="addNewCompany">
+                        <button class="btn btn-primary btn-block btn-sm" @click.prevent="updateCompany">
                           {{ loading ? 'Submitting..' : 'Submit' }} <i class="fa fa-save"></i> </button>
                       </div>
                     </div>
@@ -201,7 +204,8 @@
 <script>
   import {
     ADD_NEW_COMPANY,
-    MODIFY_COMPANY
+    MODIFY_COMPANY,
+    FETCH_ALL_COMPANIES
   } from '@/utils/routes';
   import countries from '@/utils/countries.json'
   export default {
@@ -236,12 +240,13 @@
       }
     },
     methods: {
-      async addNewCompany() {
+      async updateCompany() {
         this.loading = true
-        await this.$axios.$post(ADD_NEW_COMPANY, this.form)
+        //console.log(this.form); return;
+        await this.$axios.put(MODIFY_COMPANY(this.$route.params.id), this.form)
           .then((res) => {
             $.toast({
-              text: '<p>Company Added Successfully.</p>',
+              text: '<p>Company Updated Successfully.</p>',
               position: 'top-right',
               loaderBg: '#ab26aa',
               class: 'jq-toast-success',
@@ -252,7 +257,7 @@
             this.$router.push('/app/companies')
           })
           .catch(error => {
-            if(error.response == undefined) {
+            if (error.response == undefined) {
               this.error = error.response
               return
             }
@@ -274,6 +279,27 @@
             this.loading = false
           })
       },
+      async filterCompany() {
+        // await this.$axios.get(GET_SINGLE_COMPANY(this.$route.params.id))
+        //   .then((res) => {
+        //     const companies = res.data.dataInfo
+        //     console.log(companies); return;
+        //     this.form = {
+        //       ...selectedCompany
+        //     }
+
+        //   })
+        await this.$axios.get(FETCH_ALL_COMPANIES)
+          .then((res) => {
+            const companies = res.data.dataInfo
+            const selectedCompany = companies.filter(e => e._id == this.$route.params.id)[0]
+            this.form = {
+              ...selectedCompany
+            }
+
+          })
+      }
+
     },
     computed: {
       countryList() {
@@ -283,11 +309,17 @@
             code: e.alpha2Code
           }
         });
+      },
+      selectedCompany() {
+        return this.$route.params.id
       }
     },
+    mounted() {
+        this.filterCompany();
+    },
     watch: {
-      'section.name'(val){
-        if(val == 'first') {
+      'section.name'(val) {
+        if (val == 'first') {
           this.section = {
             name: 'first',
             first: true,

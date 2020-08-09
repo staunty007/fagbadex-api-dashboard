@@ -1,4 +1,5 @@
 export const ADD_NEW_COMPANY = "companies";
+export const MODIFY_COMPANY = id => `companies/${id}`
 export const FETCH_ALL_COMPANIES = "companies"
 export const ADD_NEW_PARTNER = "partners";
 export const FETCH_ALL_PARTNERS = "partners"

@@ -19,16 +19,6 @@ export default {
   middleware: "auth",
   methods: {
     initToast() {
-      $.toast({
-        heading: "Welcome!",
-        text: "<p>You have successfully Logged In.</p>",
-        position: "top-right",
-        loaderBg: "#ab26aa",
-        class: "jq-toast-primary",
-        hideAfter: 3500,
-        stack: 6,
-        showHideTransition: "fade",
-      });
     },
   },
   mounted() {
@@ -36,3 +26,4 @@ export default {
   },
 };
 </script>
+

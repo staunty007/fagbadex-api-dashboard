@@ -111,7 +111,8 @@ export default {
 	plugins: [
 		'~/plugins/axios',
 		{ src: '~/plugins/vue-good-table', ssr: false },
-		{ src: '~/plugins/persisted.js', ssr: false }
+		{ src: '~/plugins/persisted.js', ssr: false },
+		{ src: '~/plugins/notify.js', ssr: false },
 	],
 	/*
   ** Nuxt.js dev-modules
@@ -131,8 +132,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
 	axios: {
-		//baseURL: 'https://fagbadexapi.com'
-		baseURL: 'https://5e0ee8925205.ngrok.io'
+		baseURL: 'https://fagbadexapi.com'
+		//baseURL: 'https://0ca01266f8a6.ngrok.io'
 	},
 	/*
   ** Build configuration

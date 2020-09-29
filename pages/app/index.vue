@@ -109,13 +109,13 @@
                             <thead>
                               <tr>
                                 <th class="font-weight-bold">Company Name</th>
-                                <th class="font-weight-bold">Company Code</th>
+                                <th class="font-weight-bold">Company ID</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr v-for="(company, index) in companyLists" :key="index">
-                                <td>{{ company.companyName }}</td>
-                                <td>{{ company.companyCode }}</td>
+                                <td>{{ company.name }}</td>
+                                <td>{{ company.uId }}</td>
                               </tr>
                             </tbody>
                           </table>

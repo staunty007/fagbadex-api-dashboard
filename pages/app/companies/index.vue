@@ -93,16 +93,16 @@
               field: 'companyName',
             },
             {
-              label: 'Company Code',
-              field: 'countryCode',
+              label: 'Registered Name',
+              field: 'registeredName',
             },
             {
               label: 'Region Code',
               field: 'regionCode',
             },
             {
-              label: 'Supplier ID',
-              field: 'supplierId',
+              label: 'Company ID',
+              field: 'companyUid',
             },
             {
               label: 'More',
@@ -125,15 +125,15 @@
             this.detailedCompanies = companies
             this.companies.rows = companies.map((e) => {
               return {
-                companyName: e.companyName,
-                countryCode: e.countryCode,
+                companyName: e.name,
+                registeredName: e.registeredName,
                 regionCode: e.regionCode,
-                supplierId: e.supplierId,
+                companyUid: e.uId,
                 more: `
                 <div class='btn-group'>
-                  <button type='button' class='btn btn-info  btn-sm more-data' data-id='${e._id}'  data-company='${e.companyName}' data-type='view'><i class='fa fa-eye'></i></button>
-                  <button type='button' class='btn btn-warning  btn-sm more-data' data-id='${e._id}'  data-company='${e.companyName}' data-type='edit'><i class='fa fa-pencil'></i></button>
-                  <button type='button' class='btn btn-danger  btn-sm more-data' data-id='${e._id}' data-company='${e.companyName}' data-type='delete'> <i class='fa fa-trash'></i></button>
+                  <button type='button' class='btn btn-info  btn-sm more-data' data-id='${e.uId}'  data-company='${e.name}' data-type='view'><i class='fa fa-eye'></i></button>
+                  <button type='button' class='btn btn-warning  btn-sm more-data' data-id='${e.uId}'  data-company='${e.name}' data-type='edit'><i class='fa fa-pencil'></i></button>
+                  <button type='button' class='btn btn-danger  btn-sm more-data' data-id='${e.uId}' data-company='${e.name}' data-type='delete'> <i class='fa fa-trash'></i></button>
                 </div>
                 `
               }
@@ -150,10 +150,10 @@
         var self = this
         //console.log("Helo")
         $('.more-data').on('click', function () {
-          const companyName = $(this).data('company');
+          const name = $(this).data('company');
           const companyId = $(this).data('id');
           const btnType = $(this).data('type');
-          const filteredCompany = self.detailedCompanies.filter(el => el.companyName == companyName)[0]
+          const filteredCompany = self.detailedCompanies.filter(el => el.name == name)[0]
           if (btnType == 'view') {
             self.$router.push({
               name: 'app-companies-search',
@@ -163,7 +163,7 @@
             })
           }
           if (btnType == 'edit') {
-            const companyId = filteredCompany._id
+            const companyId = filteredCompany.uId
             self.$router.push('/app/companies/edit/' + companyId);
           }
           if (btnType == 'delete') {

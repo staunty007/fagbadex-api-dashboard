@@ -19,16 +19,13 @@
                       </div>
                     </div>
                     <div class="media-body">
-                      <div class="text-white text-capitalize display-6 mb-5 font-weight-400">{{ company.companyName }}
-                      </div>
-                      <div class="font-14 text-white">
-                        <span class="font-weight-500 pr-5"><span class="font-weight-bold">Registration No</span>: {{ company.registrationNumber }}</span>
+                      <div class="text-white text-capitalize display-6 mb-5 font-weight-400">{{ company.name }}
                       </div>
                       <div class="font-14 text-white">
                         <span class="font-weight-500 pr-5"><span class="font-weight-bold">Tax No</span>: {{ company.taxNumber }}</span>
                       </div>
                       <div class="font-14 text-white">
-                        <span class="font-weight-500 pr-5"><span class="font-weight-bold">Country Code</span>: {{ company.countryCode }} |
+                        <span class="font-weight-500 pr-5"><span class="font-weight-bold">Country Code</span>: {{ company.countryDialCode }} |
                         <span class="font-weight-bold">Region Code</span> : {{ company.regionCode }}</span>
                       </div>
                     </div>
@@ -95,19 +92,19 @@
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item"><span><i
                               class="ion ion-md-calendar font-18 text-light-20 mr-10"></i><span>
-                                History Name:</span></span><span class="ml-5 text-dark">{{ company.historyName }}</span></li>
+                                Registered Name:</span></span><span class="ml-5 text-dark">{{ company.registeredName }}</span></li>
                         <li class="list-group-item"><span><i
                               class="ion ion-md-briefcase font-18 text-light-20 mr-10"></i><span>
-                              Trade Name:</span></span><span class="ml-5 text-dark">{{ company.tradeName }}</span></li>
+                              Previous Name:</span></span><span class="ml-5 text-dark">{{ company.previousName }}</span></li>
                         <li class="list-group-item"><span><i
-                              class="ion ion-md-pin font-18 text-light-20 mr-10"></i><span>Operate Address:</span></span><span
-                            class="ml-5 text-dark">{{ company.operateAddress }}</span></li>
+                              class="ion ion-md-pin font-18 text-light-20 mr-10"></i><span>Head Office Address:</span></span><span
+                            class="ml-5 text-dark">{{ company.headOfficeAddress }}</span></li>
                         <li class="list-group-item"><span><i
-                              class="ion ion-md-pin font-18 text-light-20 mr-10"></i><span>History Address:</span></span><span
-                            class="ml-5 text-dark">{{ company.historyAddress }}</span></li>
+                              class="ion ion-md-pin font-18 text-light-20 mr-10"></i><span>Postal Address:</span></span><span
+                            class="ml-5 text-dark">{{ company.postalAddress }}</span></li>
                         <li class="list-group-item"><span><i
                               class="ion ion-md-pin font-18 text-light-20 mr-10"></i><span>Registration Address:</span></span><span
-                            class="ml-5 text-dark">{{ company.registrationAddress }}</span></li>
+                            class="ml-5 text-dark">{{ company.registeredName }}</span></li>
                       </ul>
                     </div>
 
@@ -126,10 +123,13 @@
                                 Established:</span></span><span class="ml-5 text-dark">{{ company.establishDate }}</span></li>
                           <li class="list-group-item"><span><i
                                 class="ion ion-md-calendar font-18 text-light-20 mr-10"></i><span>
-                                Tel:</span></span><span class="ml-5 text-dark">{{ company.tel }}</span></li>
+                                Tel:</span></span><span class="ml-5 text-dark">{{ company.telephone }}</span></li>
                           <li class="list-group-item"><span><i
                                 class="ion ion-md-briefcase font-18 text-light-20 mr-10"></i><span>
                                 Fax:</span></span><span class="ml-5 text-dark">{{ company.fax }}</span></li>
+                          <li class="list-group-item"><span><i
+                                class="ion ion-md-briefcase font-18 text-light-20 mr-10"></i><span>
+                                Website:</span></span><span class="ml-5 text-dark">{{ company.websiteUrl }}</span></li>
                         </ul>
                       </div>
                     </div>

@@ -32,6 +32,7 @@
               <div class="media-body">
                 <span class="text-primary font-weight-bold">
                   {{ user.name }}
+                  <!-- Jon Doe -->
                   <i class="zmdi zmdi-chevron-down"></i>
                 </span>
               </div>

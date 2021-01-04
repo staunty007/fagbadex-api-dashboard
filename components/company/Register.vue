@@ -13,14 +13,14 @@
     <div class="row" v-if="view.one">
       <div class="col-md-5">
         <div class="form-group">
-          <label for=""> Name</label>
-          <input type="text" id="" class="form-control form-control-sm square-input" v-model="form.name">
+          <label for=""> Commpany Name</label>
+          <input type="text" id="" class="form-control form-control-sm square-input" v-model="form.companyName">
           <small class="form-text text-muted"></small>
         </div>
       </div>
       <div class="col-md-5">
         <div class="form-group">
-          <label for="">Registred Name</label>
+          <label for="">Registered Name</label>
           <input type="text" id="" class="form-control form-control-sm square-input" v-model="form.registeredName">
           <small class="form-text text-muted"></small>
         </div>
@@ -29,6 +29,20 @@
         <div class="form-group">
           <label for="">Previous Name</label>
           <input type="text" id="" class="form-control form-control-sm square-input" v-model="form.previousName">
+          <small class="form-text text-muted"></small>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="form-group">
+          <label for="">Enquiry Name</label>
+          <input type="text" id="" class="form-control form-control-sm square-input" v-model="form.enquiryName">
+          <small class="form-text text-muted"></small>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="form-group">
+          <label for="">Trade Name</label>
+          <input type="text" id="" class="form-control form-control-sm square-input" v-model="form.tradeName">
           <small class="form-text text-muted"></small>
         </div>
       </div>
@@ -64,6 +78,20 @@
         </div>
       </div>
       <div class="clearfix"></div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="">Operations</label>
+          <input type="text" id="" class="form-control form-control-sm square-input" v-model="form.operations">
+          <small class="form-text text-muted"></small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="">Location</label>
+          <input type="text" id="" class="form-control form-control-sm square-input" v-model="form.location">
+          <small class="form-text text-muted"></small>
+        </div>
+      </div>
       <div class="col-md-10">
         <div class="form-group">
           <label for="">Registred Address</label>
@@ -184,9 +212,13 @@
         form: {
           previousName: '',
           supplierId: '',
-          name: '',
+          companyName: '',
+          enquiryName: '',
+          tradeName: '',
           sector: '',
           tradeName: '',
+          operations: '',
+          location: '',
           headOfficeAddress: '',
           postalAddress: ' ',
           taxNumber: '',

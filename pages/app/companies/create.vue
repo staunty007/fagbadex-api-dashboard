@@ -55,6 +55,9 @@
                       <button type="button" class="list-group-item list-group-item-action font-weight-bold rounded-0 btn-sm" @click="displaySection('summary')" :class="{ active: section.summary }">
                         SUMMARY
                       </button>
+                      <button type="button" class="list-group-item list-group-item-action font-weight-bold rounded-0 btn-sm" @click="displaySection('pdfupload')" :class="{ active: section.pdfupload }">
+                        PDF UPLOAD
+                      </button>
                     </ul>
                   </div>
                   <div class="col-md-9">
@@ -68,6 +71,7 @@
                       <RiskFactor  v-if="section.risk" :company_id="company_id"/>
                       <Shareholders  v-if="section.shareholder" :company_id="company_id"/>
                       <Summary  v-if="section.summary" :company_id="company_id"/>
+                      <PdfUpload  v-if="section.pdfupload" :company_id="company_id"/>
                     </keep-alive>
                   </div>
                 </div>
@@ -97,6 +101,7 @@
   import RiskFactor from "@/components/company/RiskFactor";
   import Shareholders from "@/components/company/Shareholders";
   import Summary from "@/components/company/Summary";
+  import PdfUpload from "@/components/company/PdfUpload";
 
   export default {
     components: {
@@ -109,6 +114,7 @@
       RiskFactor,
       Shareholders,
       Summary,
+      PdfUpload
     },
     data() {
       return {
@@ -123,6 +129,7 @@
           risk: false,
           shareholder: false,
           summary: false,
+          pdfupload:false
         },
         
         error: {}

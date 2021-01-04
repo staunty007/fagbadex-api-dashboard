@@ -62,6 +62,26 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="javascript:void(0);"
+                data-toggle="collapse"
+                data-target="#orders_drp"
+              >
+                <i class="fa fa-users"></i>
+                <span class="nav-link-text">Orders</span>
+              </a>
+              <ul id="orders_drp" class="nav flex-column collapse collapse-level-1">
+                <li class="nav-item">
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <nuxt-link class="nav-link" to="/app/orders">Show All</nuxt-link>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
           </ul>
           <hr class="nav-separator" />
           <div class="nav-header">

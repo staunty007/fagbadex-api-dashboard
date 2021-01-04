@@ -133,7 +133,7 @@ export default {
   */
 	axios: {
 		baseURL: 'https://fagbadexapi.com'
-		//baseURL: 'https://0ca01266f8a6.ngrok.io'
+		//baseURL: 'https://ba4dd4823e77.ngrok.io'
 	},
 	/*
   ** Build configuration

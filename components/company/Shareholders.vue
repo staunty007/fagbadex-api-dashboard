@@ -28,6 +28,14 @@
               <label for="" class="font-weight-bold">Address</label>
               <input type="text" class="form-control form-control-sm square-input" v-model="holder.address">
             </div>
+            <div class="form-group col-md-4">
+              <label for="" class="font-weight-bold">Percantage</label>
+              <input type="text" class="form-control form-control-sm square-input" v-model="holder.percentageHeld">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="" class="font-weight-bold">Shared Allotment</label>
+              <input type="text" class="form-control form-control-sm square-input" v-model="holder.shareAllotment">
+            </div>
           </div>
         </div>
       </div>
@@ -93,6 +101,8 @@
           id: this.counter.shareholders,
           name: '',
           address: '',
+          percentageHeld: '',
+          shareAllotment: ''
         });
       },
       async getShareholders() {
@@ -115,6 +125,8 @@
                 id: i++,
                 name: e.name,
                 address: e.address,
+                percentageHeld: e.percentageHeld,
+                shareAllotment: e.shareAllotment
               }
             })
 
@@ -130,7 +142,9 @@
         const shareholders = JSON.parse(JSON.stringify(this.shareholders)).map(e => {
           return {
             name: e.name,
-            address: e.address
+            address: e.address,
+            percentageHeld: e.percentageHeld,
+            shareAllotment: e.shareAllotment
           }
         });
 

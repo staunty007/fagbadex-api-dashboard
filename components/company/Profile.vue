@@ -26,6 +26,15 @@
     <form>
       <div v-if="!pageLoader">
         <div class="row" v-if="section.one">
+          <div class="col-md-12">
+            <hr>
+            <div class="">
+              <p class="text-uppercase text-dark font-weight-bold">Background</p>
+              <div class="form-group">
+                <textarea name="" class="form-control" id="" cols="30" rows="5" v-model="form.background"></textarea>
+              </div>
+            </div>
+          </div>
           <!--branches -->
           <div class="col-md-12">
             <hr>
@@ -364,7 +373,8 @@
           coreValues: [],
           customerTypes: [],
           performanceRanking: [],
-          physicalVisit: []
+          physicalVisit: [],
+          background: ""
         }
       }
     },
@@ -398,7 +408,7 @@
         this.pageLoader = true
         await this.$axios.get(GET_COMPANY_PROFILE(this.company_id))
           .then((res) => {
-            console.log(res.data)
+           // console.log(res.data)
 
             this.pageLoader = false
 
@@ -411,9 +421,15 @@
             const profile = {};
             //console.log(data[0])
             const newData = res.data[0];
-            ['_id', 'companyId', '__v'].forEach(el => {
-              delete newData[el];
-            })
+
+            // console.log(newData)
+             const background = JSON.parse(JSON.stringify(newData.background));
+
+              delete(newData.background)
+              delete(newData._id)
+              delete(newData.companyId)
+              delete(newData.__v)
+
 
             for (var key in newData) {
               profile[key] = newData[key].length < 1 ? [] : (newData[key]).map((e, i) => {
@@ -423,12 +439,13 @@
                 }
               })
             }
-
+            
+            profile.background = background
             this.form = profile
 
           })
           .catch((err) => {
-            console.log(err.response.data)
+            console.log(err)
           })
       },
        saveCompanyProfile() {
@@ -446,8 +463,9 @@
           performanceRanking: this.form.performanceRanking.length > 0 ? this.form.performanceRanking.map(e => e
             .value) : [],
           physicalVisit: this.form.physicalVisit.length > 0 ? this.form.physicalVisit.map(e => e.value) : [],
+          background: this.form.background
         }
-        //console.log(payload)
+        // console.log(payload); return;
         this.loading = true
         try {
           let resp;

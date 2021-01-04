@@ -39,3 +39,9 @@ export const SHAREHOLDER_GET = id => `company/${id}/share-holders`
 export const SUMMARY_CREATE = id => `company/${id}/summary/create`
 export const SUMMARY_UPDATE = id => `company/${id}/summary/update`
 export const SUMMARY_GET = id => `company/${id}/summary`
+
+export const UPLOAD_PDF = '/Company/UploadPDF'
+export const GET_PDF = id => `/Company/${id}/getPdf`
+
+export const ORDERS = `/orders`
+export const ORDER_UPDATE = `/orders/update`

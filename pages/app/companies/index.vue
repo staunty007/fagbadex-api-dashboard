@@ -111,8 +111,8 @@
             },
           ],
           rows: [],
-          detailedCompanies: [],
         },
+        detailedCompanies: [],
         selectedCompanyId: "",
         error: {}
       }
@@ -125,15 +125,15 @@
             this.detailedCompanies = companies
             this.companies.rows = companies.map((e) => {
               return {
-                companyName: e.name,
+                companyName: e.companyName,
                 registeredName: e.registeredName,
                 regionCode: e.regionCode,
                 companyUid: e.uId,
                 more: `
                 <div class='btn-group'>
-                  <button type='button' class='btn btn-info  btn-sm more-data' data-id='${e.uId}'  data-company='${e.name}' data-type='view'><i class='fa fa-eye'></i></button>
-                  <button type='button' class='btn btn-warning  btn-sm more-data' data-id='${e.uId}'  data-company='${e.name}' data-type='edit'><i class='fa fa-pencil'></i></button>
-                  <button type='button' class='btn btn-danger  btn-sm more-data' data-id='${e.uId}' data-company='${e.name}' data-type='delete'> <i class='fa fa-trash'></i></button>
+                  <button type='button' class='btn btn-info  btn-sm more-data' data-id='${e.uId}'  data-company='${e.companyName}' data-type='view'><i class='fa fa-eye'></i></button>
+                  <button type='button' class='btn btn-warning  btn-sm more-data' data-id='${e.uId}'  data-company='${e.companyName}' data-type='edit'><i class='fa fa-pencil'></i></button>
+                  <button type='button' class='btn btn-danger  btn-sm more-data' data-id='${e.uId}' data-company='${e.companyName}' data-type='delete'> <i class='fa fa-trash'></i></button>
                 </div>
                 `
               }
@@ -149,11 +149,13 @@
       selectCompany() {
         var self = this
         //console.log("Helo")
-        $('.more-data').on('click', function () {
+        $('.more-data').on('click', function (e) {
+          //console.log($(this).data('id')); return;
           const name = $(this).data('company');
           const companyId = $(this).data('id');
           const btnType = $(this).data('type');
-          const filteredCompany = self.detailedCompanies.filter(el => el.name == name)[0]
+          //console.log(self.detailedCompanies.filter(el => el.uId == companyId));
+          const filteredCompany = self.detailedCompanies.filter(el => el.uId == companyId)[0]
           if (btnType == 'view') {
             self.$router.push({
               name: 'app-companies-search',

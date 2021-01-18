@@ -132,7 +132,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
 	axios: {
-		baseURL: 'https://fagbadexapi.com'
+		baseURL: 'https://prod.fagbadexapi.com'
 		//baseURL: 'https://ba4dd4823e77.ngrok.io'
 	},
 	/*

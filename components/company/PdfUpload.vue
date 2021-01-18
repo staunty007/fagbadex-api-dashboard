@@ -115,19 +115,27 @@
         formData.append('companyId', this.company_id)
 
         //console.log(formData); return;
-        this.$axios.post(UPLOAD_PDF,
+        try {
+          const req = this.$axios.post(UPLOAD_PDF,
             formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
             }
-          ).then(function (res) {
-            this.notify()
-            console.log(res);
+          )
+          const app = this
+          req.then(function (res) {
+            app.$notify(
+              "PDF Uploaded",
+              "top-right",
+              "primary"
+            );
+            app.getPDf()
           })
-          .catch(function (err) {
-            console.log(err);
-          });
+          
+        } catch (err) {
+          console.log(err);
+        }
       },
     }
 
